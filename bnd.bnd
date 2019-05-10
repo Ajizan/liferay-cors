@@ -1,0 +1,3 @@
+Bundle-Name: liferay-cors
+Bundle-SymbolicName: com.ajizan.liferay.cors
+Bundle-Version: 1.0.0
