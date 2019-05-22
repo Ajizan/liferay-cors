@@ -17,8 +17,12 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
-@Component(property = { "osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Filter.CORS" }, configurationPid = "com.ajizan.liferay.cors.configuration.LiferayCORSConfiguration", service = ContainerResponseFilter.class)
+//@Provider
+//@JaxrsName("LiferayCorsFilter")
+//@JaxrsExtension
+//@JaxrsApplicationSelect(JaxrsWhiteboardConstants.JAX_RS_NAME + "=*")
+@Component(property = { "osgi.jaxrs.extension=true", "osgi.jaxrs.name=LiferayCorsFilter",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=*)" }, immediate = true, configurationPid = "com.ajizan.liferay.cors.configuration.LiferayCORSConfiguration", service = ContainerResponseFilter.class)
 public class LiferayCorsFilter implements ContainerResponseFilter {
 
 	private Log _log = LogFactoryUtil.getLog(getClass());
@@ -28,6 +32,10 @@ public class LiferayCorsFilter implements ContainerResponseFilter {
 			throws IOException {
 
 		String method = requestContext.getMethod();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("méthode interceptée=" + method);
+		}
 
 		boolean applyOptions = _liferayCORSConfiguration.applyOptions();
 		if (applyOptions && !"OPTIONS".equals(method)) {
