@@ -34,10 +34,10 @@ public class LiferayCorsFilter implements ContainerResponseFilter {
 			return;
 		}
 
-		String allowOrigin = _liferayCORSConfiguration.origin();
-		String allowHeaders = _liferayCORSConfiguration.headers();
-		String allowMethods = _liferayCORSConfiguration.methods();
-		int allowMaxAge = _liferayCORSConfiguration.maxAge();
+		String allowOrigin = _liferayCORSConfiguration.getOrigin();
+		String allowHeaders = String.join(",", _liferayCORSConfiguration.getHeaders());
+		String allowMethods = String.join(",", _liferayCORSConfiguration.getMethods());
+		int allowMaxAge = _liferayCORSConfiguration.getMaxAge();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Writing CORS headers. Access-Control-Allow-Origin=" + allowOrigin
